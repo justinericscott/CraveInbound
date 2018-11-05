@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<script type="text/javascript">
+// 	window.onload = function() {
+// 		var btn = document.getElementById('btn');
+
+// 		function sendMessage(e) {
+// 			var url = "https://vanguarddev.appiancloud.com/suite/webapi/craveInbound";
+// 			var data = JSON.stringify({
+// 				"caseId" : "123456789",
+// 				"processor" : "Justin Scott",
+// 				"comment" : "COMMENTS"
+// 			});
+// 			e.preventDefault();
+// 			window.postMessage(data, url);
+// 		}
+// 		btn.addEventListener('click', sendMessage);
+// 	}
+
+	function sendMessage() {
+		var xhr = new XMLHttpRequest();
+		var url = "https://vanguarddev.appiancloud.com/suite/webapi/craveInbound";
+		var data = JSON.stringify({
+			"caseId" : "123456789",
+			"processor" : "Justin Scott",
+			"comment" : "COMMENTS"
+		});
+		xhr.open("POST", url, true);
+// 		xhr.onreadystatechange = handler;
+		xhr.setRequestHeader("Content-Type", "application/json");
+		xhr.setRequestHeader("Authentication", "Basic " + btoa("justin.scott@itgfirm.com:jxs20180901@#!"));
+// 		xhr.setRequestHeader("Origin", "https://vanguarddev.appiancloud.com");
+		xhr.send(data);
+	}
+</script>
+<head>
+</head>
+<body>
+	<button
+		style="background-color: #96151D; width: 150px; height: 40px; color: white"
+		onclick="sendMessage()">Process</button>
+</body>
+</html>

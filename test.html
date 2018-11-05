@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<script type="text/javascript">
+	window.addEventListener("message", receiveMessage, false); 
+	function receiveMessage(event) {
+		console.log("Message received: " + event.data);
+	}  
+	var validHelmOrigins = new Set();  
+	validHelmOrigins.add('http://oedesktop.vanguard.com'); 
+	validHelmOrigins.add('https://oedesktop.vanguard.com'); 
+	validHelmOrigins.add('http://satoedesktop.vanguard.com:1080'); 
+	validHelmOrigins.add('http://satoedesktop.vanguard.com:2080'); 
+	validHelmOrigins.add('http://satoedesktop.vanguard.com:3080'); 
+	validHelmOrigins.add('http://satoedesktop.vanguard.com:4080'); 
+	validHelmOrigins.add('http://satoedesktop.vanguard.com:5080'); 
+	validHelmOrigins.add('http://satoedesktop.vanguard.com:6080'); 
+	validHelmOrigins.add('http://satoedesktop.vanguard.com:7080'); 
+	validHelmOrigins.add('http://satoedesktop.vanguard.com:8080'); 
+	validHelmOrigins.add('http://satoedesktop.vanguard.com:9080'); 
+	validHelmOrigins.add('http://satoedesktop.vanguard.com:10080'); 
+	validHelmOrigins.add('http://appi.vanguard.com'); 
+	validHelmOrigins.add('https://appi.vanguard.com'); 
+	validHelmOrigins.add('http://satappi.vanguard.com:1080'); 
+	validHelmOrigins.add('https://satappi.vanguard.com:1443'); 
+	validHelmOrigins.add('http://localhost.vanguard.com:8080'); 
+	validHelmOrigins.add('http://wave-helm-webapp-production-PRE.app.cf01.vanguard.com'); 
+	validHelmOrigins.add('https://wave-helm-webapp-production-PRE.app.cf01.vanguard.com'); 
+	validHelmOrigins.add('http://wave-helm-webapp-production-PRE.app.cf03.vanguard.com'); 
+	validHelmOrigins.add('https://wave-helm-webapp-production-PRE.app.cf03.vanguard.com'); 
+	validHelmOrigins.add('http://oedesktop.vanguard.com:11080'); 
+	validHelmOrigins.add('http://oedesktop.vanguard.com:11081'); 
+	validHelmOrigins.add('http://oedesktop.vanguard.com:12080'); 
+	validHelmOrigins.add('http://oedesktop.vanguard.com:12081'); 
+	validHelmOrigins.add('http://oedesktop.vanguard.com:21080'); 
+	validHelmOrigins.add('http://oedesktop.vanguard.com:21081'); 
+	validHelmOrigins.add('http://oedesktop.vanguard.com:22080'); 
+	validHelmOrigins.add('http://oedesktop.vanguard.com:22081');  
+	function getHelmWindow() {
+		var helmWindow;
+		try {
+			helmWindow = parent.window.opener;
+			if (helmWindow.location.href === 'about:blank') {
+				helmWindow = null;
+			}
+		} catch (ex) {
+			console.log('Exception encountered while check the window href, it is most likely the Helm');     
+		}     
+		return helmWindow; 
+	}  	 	
+	function SendMessage() {
+		try{
+			var helmWindow = getHelmWindow();
+			var msg = JSON.parse(JSON.stringify(###param###));
+			if (helmWindow != null) {
+				validHelmOrigins.forEach(
+					function(origin) {
+						console.log(origin);
+						helmWindow.postMessage(msg, origin);
+					}
+				);
+			} else {
+				console.log('Helm window not found');
+			}
+		} catch (ex) {
+			console.log(ex);
+			throw 'The Helm was not found, launch your app through the Helm to allow messaging'; 
+		}
+	} 
+</script>
+<head>
+</head>
+<body>
+	<button
+		style="background-color: #96151D; width: 150px; height: 40px; color: white"
+		onclick="SendMessage()">Process</button>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src='APPIAN_BASE_URL/tempo/ui/sail-client/api.nocache.js'></script>
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+		<meta charset="utf-8">
+		<title>Places Search Box</title>
+		<style>
+		</style>
+	</head>
+	<body>
+
+		<p>Click the button to open WAVE.</p>
+
+		<button onclick="startProcessing()">Start Processing</button>
+		<br/>
+		<br/>
+		<script>
+
+			var caseId;
+			var processor;
+		
+			window.onload = function() {
+				window.addEventListener("message", (event) => { receiveMessage(event); }, false);
+			}
+
+			function startProcessing() {
+				var win = window.open("http://htmlpreview.github.io/?https://raw.githubusercontent.com/clagos12/userLogin/master/wavesimulation.html");
+				setTimeout(function() { win.postMessage({caseId: caseId, processor: processor} , "*");}, 1000);
+			}
+
+			function receiveMessage(event) {
+				console.log("data");
+				console.log(event.data);
+				if (event.origin !== "http://htmlpreview.github.io"){
+					return;
+				}
+				Appian.Component.saveValue('selectionSaves', event.data);
+			}
+			
+			Appian.Component.onNewValue('caseId', function(caseId) {
+			console.log(caseId);
+				this.caseId = caseId;
+			});
+			
+			Appian.Component.onNewValue('processor', function(processor) {
+			console.log(processor);
+				this.processor = processor;
+			});
+		</script>
+	</body>
+</html>
