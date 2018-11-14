@@ -42,9 +42,6 @@
 				console.log("data");
 				console.log(event.data);
 
-				if (event.origin !== "https://appian-extensions-1.appianci-dynamic.net"){
-					return;
-				}
 				caseId.innerHTML = "Case ID: " + event.data.caseId;
 				processor.innerHTML = "Processor: " + event.data.processor;		
 			}
